@@ -1,0 +1,12 @@
+node_modules/
+.wrangler/
+
+# Segreti: mai in git. Il file .example invece si pubblica.
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+.env
+.env.*
+
+# Configurazioni locali degli editor/agenti
+.claude/

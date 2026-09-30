@@ -1,0 +1,61 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "task-manager",
+  "main": "src/index.js",
+  "compatibility_date": "2026-09-01",
+  // global_fetch_strictly_public: richiesto da OAuthProvider per i client
+  // che si presentano con un documento di metadati (CIMD).
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+
+  "vars": {
+    // Il tuo fuso orario: decide quando "oggi" diventa "domani".
+    // Elenco: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    "TIMEZONE": "Europe/Rome"
+
+    // FACOLTATIVO: cosa conta come "lavoro" per te. Claude lo usa per decidere
+    // se un task e' di lavoro o privato. Se lo lasci com'e', usa un elenco
+    // generico. Togli le // qui sotto per personalizzarlo (e metti la virgola
+    // dopo la riga del fuso orario):
+    // "WORK_CONTEXT": "il mio studio, i clienti, i fornitori, la contabilita'"
+  },
+
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    // Solo il documento principale passa dal Worker: cosi' aggiungiamo gli
+    // header di sicurezza (CSP) prima di restituirlo. JS, CSS, manifest,
+    // service worker e icone li serve Cloudflare direttamente.
+    "run_worker_first": ["/", "/index.html"]
+  },
+
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "task-manager",
+      // DA SOSTITUIRE: l'id che ti restituisce
+      //   npx wrangler d1 create task-manager
+      // Finche' resta a zeri funziona solo in locale.
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "migrations"
+    }
+  ],
+
+  "kv_namespaces": [
+    {
+      // Token e client OAuth. Obbligatorio per OAuthProvider.
+      "binding": "OAUTH_KV",
+      // DA SOSTITUIRE: l'id che ti restituisce
+      //   npx wrangler kv namespace create OAUTH_KV
+      "id": "00000000000000000000000000000000"
+    }
+  ],
+
+  "triggers": {
+    // Ogni giorno alle 03:00 UTC: svuota il cestino oltre i 30 giorni.
+    "crons": ["0 3 * * *"]
+  },
+
+  "observability": {
+    "enabled": true
+  }
+}

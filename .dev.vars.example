@@ -1,0 +1,10 @@
+# Segreti PER LE PROVE IN LOCALE (npm run dev). Copia questo file in .dev.vars
+#   cp .dev.vars.example .dev.vars
+# .dev.vars e' escluso da git: non va mai pubblicato.
+#
+# Attenzione: questi valori NON sono quelli di produzione. In produzione i
+# segreti si caricano con `npx wrangler secret put NOME` e non stanno in nessun file.
+
+APP_PASSWORD=password-solo-per-prove-locali
+SESSION_SECRET=sostituisci-con-una-stringa-casuale-lunga-almeno-32-caratteri
+API_TOKEN=token-solo-per-prove-locali

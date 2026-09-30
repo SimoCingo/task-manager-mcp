@@ -1,0 +1,28 @@
+{
+  "name": "task-manager-mcp",
+  "version": "0.1.0",
+  "description": "Task manager personale su Cloudflare (piano gratuito), usabile da Claude tramite MCP e da una web app installabile sul telefono.",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:locale": "wrangler d1 migrations apply task-manager --local",
+    "db:remoto": "wrangler d1 migrations apply task-manager --remote",
+    "test": "node scripts/smoke-test.mjs",
+    "icons": "node scripts/generate-icons.mjs"
+  },
+  "dependencies": {
+    "@cloudflare/workers-oauth-provider": "^0.10.3",
+    "@modelcontextprotocol/server": "2.0.0",
+    "agents": "^0.23.0",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "wrangler": "^4.132.0"
+  }
+}

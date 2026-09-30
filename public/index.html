@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+<title>Task Manager</title>
+<meta name="theme-color" content="#2f5d50">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Task">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" type="image/png" href="/icons/icon-192.png">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<!-- ================================================================ LOGIN -->
+<main id="screen-login" class="screen" hidden>
+  <form id="form-login" class="login-card">
+    <h1>Task Manager</h1>
+    <p class="muted">Inserisci la password di questa installazione.</p>
+    <label for="login-password">Password</label>
+    <input id="login-password" type="password" autocomplete="current-password" required autofocus>
+    <p id="login-error" class="error" hidden></p>
+    <button type="submit">Entra</button>
+  </form>
+</main>
+
+<!-- ================================================================== APP -->
+<div id="screen-app" class="screen" hidden>
+
+  <header class="topbar">
+    <h1 id="view-title">Oggi</h1>
+    <div class="segmented" id="area-filter" role="tablist" aria-label="Area">
+      <button type="button" data-area="" class="active" role="tab" aria-selected="true">Tutto</button>
+      <button type="button" data-area="work" role="tab" aria-selected="false">Lavoro</button>
+      <button type="button" data-area="personal" role="tab" aria-selected="false">Privato</button>
+    </div>
+    <button type="button" id="btn-more" class="icon-btn" aria-label="Altro" aria-haspopup="true">⋯</button>
+  </header>
+
+  <main id="content" aria-live="polite"></main>
+
+  <form id="form-quick-add" class="composer">
+    <input id="quick-add-input" type="text" placeholder="Aggiungi un task…" autocomplete="off" enterkeyhint="send" maxlength="500">
+    <button type="submit" aria-label="Aggiungi">+</button>
+  </form>
+
+  <nav class="tabbar" id="tabbar">
+    <button type="button" data-view="today" class="active">
+      <span class="tab-icon">☀️<span class="tab-badge" id="badge-today" hidden>0</span></span><span>Oggi</span>
+    </button>
+    <button type="button" data-view="inbox">
+      <span class="tab-icon">📥<span class="tab-badge" id="badge-inbox" hidden>0</span></span><span>Inbox</span>
+    </button>
+    <button type="button" data-view="upcoming">
+      <span class="tab-icon">📆</span><span>Prossimi</span>
+    </button>
+    <button type="button" data-view="projects">
+      <span class="tab-icon">📁</span><span>Progetti</span>
+    </button>
+    <button type="button" data-view="search">
+      <span class="tab-icon">🔍</span><span>Cerca</span>
+    </button>
+  </nav>
+</div>
+
+<!-- ============================================================ OVERLAYS -->
+<div id="backdrop" class="backdrop" hidden></div>
+
+<div id="sheet-more" class="sheet" hidden role="menu">
+  <button type="button" data-view="done" role="menuitem">✓ Fatte</button>
+  <button type="button" data-view="trash" role="menuitem">🗑 Cestino</button>
+  <hr>
+  <button type="button" id="btn-logout" role="menuitem">Esci</button>
+</div>
+
+<form id="sheet-task" class="sheet sheet-form" hidden>
+  <div class="sheet-handle"></div>
+  <label for="task-title">Titolo</label>
+  <input id="task-title" type="text" required maxlength="500">
+
+  <label for="task-notes">Note</label>
+  <textarea id="task-notes" rows="2" maxlength="5000"></textarea>
+
+  <div class="field-row">
+    <div>
+      <label for="task-area">Area</label>
+      <select id="task-area">
+        <option value="">Inbox</option>
+        <option value="work">Lavoro</option>
+        <option value="personal">Privato</option>
+      </select>
+    </div>
+    <div>
+      <label for="task-priority">Priorità</label>
+      <select id="task-priority">
+        <option value="normal">Normale</option>
+        <option value="high">Alta</option>
+        <option value="low">Bassa</option>
+      </select>
+    </div>
+  </div>
+
+  <label for="task-project">Progetto</label>
+  <input id="task-project" type="text" list="project-names" maxlength="100" placeholder="Nessuno">
+  <datalist id="project-names"></datalist>
+
+  <div class="field-row">
+    <div>
+      <label for="task-date">Data</label>
+      <input id="task-date" type="date">
+    </div>
+    <div>
+      <label for="task-time">Ora</label>
+      <input id="task-time" type="time">
+    </div>
+  </div>
+
+  <div class="chip-row">
+    <button type="button" data-quick-date="today">Oggi</button>
+    <button type="button" data-quick-date="tomorrow">Domani</button>
+    <button type="button" data-quick-date="next_week">Sett. prossima</button>
+    <button type="button" data-quick-date="">Senza data</button>
+  </div>
+
+  <div class="sheet-actions">
+    <button type="button" id="task-delete" class="danger">Elimina</button>
+    <button type="button" id="task-restore" class="secondary" hidden>Ripristina</button>
+    <button type="button" id="task-cancel" class="secondary">Annulla</button>
+    <button type="submit" id="task-save">Salva</button>
+  </div>
+</form>
+
+<script src="/app.js"></script>
+</body>
+</html>
