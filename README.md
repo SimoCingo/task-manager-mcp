@@ -131,7 +131,7 @@ Copia l'output e incollalo quando Wrangler lo chiede.
 npm run deploy
 ```
 
-La prima volta Wrangler chiede di **registrare un sottodominio `workers.dev`** per il tuo account: scegli un nome (solo minuscole, numeri e trattini). Ti conviene un nome neutro, perché l'indirizzo è pubblico. Alla fine stampa l'indirizzo del tuo servizio:
+La prima volta Wrangler registra un sottodominio workers.dev per il tuo account, spesso scegliendolo da solo a partire dal nome o dall'email dell'account. Controlla l'indirizzo che stampa alla fine: è pubblico e potrebbe contenere il tuo nome. Se non ti piace puoi cambiarlo dal pannello Cloudflare (Workers & Pages → Change accanto a "Your subdomain*"). Meglio farlo prima di collegare Claude, perché dopo il connettore va ricreato con il nuovo indirizzo. Ecco l'indirizzo del tuo servizio:
 
 ```
 https://task-manager.<il-tuo-nome>.workers.dev
